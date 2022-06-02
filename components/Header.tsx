@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import { signIn, useSession, signOut } from 'next-auth/react'
 import { 
   ChevronDownIcon,
   HomeIcon,
@@ -17,6 +18,7 @@ import {
   } from '@heroicons/react/outline'
 
 function Header() {
+    const { data: session } = useSession();
   return (
     <div className='sticky top-0 z-50 flex bg-white px-4 py-2 shadow-md'>
       <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer" >
@@ -56,8 +58,35 @@ function Header() {
       <div className='ml-5 flex items-center lg:hidden'>
         <MenuIcon className='icon'/>
       </div>
-    </div>
-  )
-}
 
+      {/* Sign In / Sign Out Button */}
+      {session ? (
+      <div onClick={() => signOut()} className='hidden lg:flex item-center border border-gray-100 p-2 space-x-2 cursor-pointer'>
+        <div className='relative h-5 w-5 flex-shrink-0'>
+          <Image 
+            objectFit='contain'
+            src='https://cdn-icons-png.flaticon.com/512/52/52053.png' 
+            layout='fill'
+            alt='' />
+        </div>
+          <div className='flex-1 text-xs'>
+            <p className='truncate'>{session?.user?.name}</p>
+            <p className='text-gray-400'>9 Karma</p>
+          </div>
+          <ChevronDownIcon className='h-5 flex-shrink-0 text-gray-400' />
+      </div>
+      ): (
+      <div onClick={() => signIn()} className='hidden lg:flex item-center border border-gray-100 p-2 space-x-2 cursor-pointer'>
+        <div className='relative h-5 w-5 flex-shrink-0'>
+          <Image 
+            objectFit='contain'
+            src='https://cdn-icons-png.flaticon.com/512/52/52053.png' 
+            layout='fill'
+            alt='' />
+        </div>
+        <p className='text-gray-400'>Sign In</p>
+      </div>
+      )}
+    </div> 
+    )}
 export default Header
