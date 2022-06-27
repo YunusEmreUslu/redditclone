@@ -4,8 +4,8 @@ module.exports = {
   images: {
     domains: [
       "links.papareact.com",
-      "www.flaticon.com",
       "cdn-icons-png.flaticon.com",
+      "avatars.dicebear.com",
     ],
   },
 };
